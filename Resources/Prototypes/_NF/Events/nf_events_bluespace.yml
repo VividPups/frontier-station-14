@@ -207,3 +207,24 @@
   - type: BluespaceErrorRule
     gridPaths:
       - /Maps/_NF/Bluespace/mcevent.yml
+
+- type: entity
+  id: FlyingDutchman
+  parent: BaseStationEventShortDelay
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-bluespace-generic-ftl-start-announcement
+    startAudio:
+      path: /Audio/_NF/PirateLaugh.ogg
+    endAnnouncement: station-event-bluespace-generic-ftl-end-announcement
+    earliestStart: 80
+    minimumPlayers: 45
+    weight: 1
+    duration: 1800
+    maxDuration: 2400
+    maxOccurrences: 1 
+  - type: BluespaceErrorRule
+    gridPaths:
+      - /Maps/_NF/Bluespace/blackbeard.yml
+    rewardFactor: 0.5 # Filler to make the bank go up

@@ -5,3 +5,12 @@
   components:
   - type: AccessReader
     access: [["Mail"]]
+
+- type: entity
+  id: AdvanceSignalButton
+  parent: SignalButton
+  name: advance signal button
+  description: It's a button for activating something at longer ranges.
+  components:
+   - type: WirelessNetworkConnection
+     range: 600
