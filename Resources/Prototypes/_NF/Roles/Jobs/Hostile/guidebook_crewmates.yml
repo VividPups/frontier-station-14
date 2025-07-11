@@ -4,7 +4,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitSalvageSpecialist
     shoes: ClothingShoesBootsSalvage
-    gloves: ClothingHandsGlovesWeaponWieldedGlaive
+    neck: PunkHandsGlovesBaseballBat
     mask: ClothingMaskGasExplorer
     ear: ClothingHeadsetMining
     belt: ClothingBeltSalvageWebbing
@@ -25,14 +25,14 @@
   id: GuidebookMemeNpcUglyLoadout
   equipment:
     jumpsuit: ClothingUniformJumpskirtJanimaid
-    gloves: ClothingHandsGlovesWeaponWieldedPickaxe
+    gloves: ClothingHandsGlovesColorMercMosin
     back: ClothingBackpackDuffelSalvage
 
 - type: startingGear
   id: GuidebookMemeNpcThatGuyLoadout
   equipment:
     jumpsuit: ClothingUniformJumpsuitMilitarySalvageSpecialist
-    back: WeaponRifleAk
+    back: NFWeaponRifleAssaultSm
     belt: ClothingBeltMilitaryWebbing
     shoes: ClothingShoesBootsSalvage
     eyes: ClothingEyesGlassesSunglasses

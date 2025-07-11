@@ -7,7 +7,7 @@
   - type: StorageFill
     contents:
       - id: MopItem
-      - id: MopBucket
+      - id: MopBucketCubeWrapped
       - id: Bucket
         amount: 1 # Frontier 3<1
       - id: WetFloorSign
@@ -32,6 +32,17 @@
     contents:
       - id: BoxLighttube
       - id: BoxLightbulb
+
+- type: entity
+  id: CrateServiceHolidayLights
+  parent: CrateGenericSteel
+  name: holiday lights crate
+  description: Deck the halls with these festive holiday lights!
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxLighttubeHoliday
+      - id: BoxLighttubeHoliday
 
 - type: entity
   id: CrateMousetrapBoxes
@@ -79,6 +90,7 @@
     contents:
     - id: ClothingUniformJumpskirtPerformer
     - id: ClothingShoesBootsPerformer
+    - id: ClothingHeadPerformerWig
     - id: ClothingOuterSuitMonkey
     - id: ClothingHeadHatAnimalMonkey
     - id: ClothingNeckCloakMoth
@@ -87,7 +99,7 @@
     - id: ClothingShoesClown
     - id: ClothingUniformJumpskirtJanimaid
     - id: ClothingNeckCloakVoid
-    - id: RevolverCapGun
+    - id: NFRevolverCapGun # Frontier: RevolverCapGun<NFRevolverCapGun
     - id: BarberScissors
     - id: ClothingUniformJumpskirtOldDress
     - id: BikeHorn
@@ -131,6 +143,7 @@
     - id: BoxFolderYellow
     - id: NewtonCradle
     - id: BoxEnvelope
+    - id: BrbSign
     - id: RubberStampCaptain # Frontier
 
 - type: entity
@@ -187,7 +200,7 @@
       - id: BookMedicalReferenceBook
       - id: BookHowToSurvive
       - id: BookChemicalCompendium
-      - id: HyperlinkBookSpaceLaw # Frontier: BookSpaceLaw<HyperlinkBookSpaceLaw
+      - id: NFHyperlinkBookSpaceLaw # Frontier: BookSpaceLaw<NFHyperlinkBookSpaceLaw
 
 - type: entity
   id: CrateServiceSodaDispenser
@@ -271,14 +284,12 @@
     - type: StorageFill
       contents:
           # Creatures
-        - id: MobCockroach
-          prob: 0.05
-        - id: MobMothroach
-          prob: 0.03
-        - id: MobRosyMothroach # Frontier
-          prob: 0.005 # Frontier
-        - id: MobMouse
-          prob: 0.05
+#        - id: MobCockroach # Frontier
+#          prob: 0.05 # Frontier
+#        - id: MobMothroach # Frontier
+#          prob: 0.03 # Frontier
+#        - id: MobMouse # Frontier
+#          prob: 0.05 # Frontier
           # Food Packaging
         - id: FoodPacketBoritosTrash
           prob: 0.1
@@ -315,10 +326,10 @@
         - id: CigaretteSpent
           prob: 0.15
           # Bacteria
-        - id: FoodBreadMoldySlice
-          prob: 0.15
-        - id: FoodPizzaMoldySlice
-          prob: 0.15
+#        - id: FoodBreadMoldySlice # Frontier
+#          prob: 0.15 # Frontier
+#        - id: FoodPizzaMoldySlice # Frontier
+#          prob: 0.15 # Frontier
           # Botanical Waste
         - id: TrashBananaPeel
           prob: 0.15
@@ -333,8 +344,8 @@
           prob: 0.15
         - id: LightBulbBroken
           prob: 0.15
-        - id: MobMouseDead
-          prob: 0.1
+#        - id: MobMouseDead # Frontier
+#          prob: 0.1 # Frontier
         - id: Syringe
           prob: 0.1
         - id: ShardGlassPlasma
@@ -352,3 +363,14 @@
         amount: 2
       - id: BoxCandleSmall
         amount: 2
+
+- type: entity
+  parent: CrateGenericSteel
+  id: CrateServiceColorfulLights
+  name: colorful lights crate
+  description: It's not a party until it's hard to see, a little disorienting, and your ears hurt.
+  components:
+  - type: StorageFill
+    contents:
+    - id: BoxLightbulbColorfulMixed
+    - id: BoxLighttubeColorfulMixed

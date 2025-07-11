@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Research.Prototypes;
@@ -6,7 +6,7 @@ namespace Content.Shared.Research.Prototypes;
 /// <summary>
 /// This is a prototype for a technology that can be unlocked.
 /// </summary>
-[Prototype("technology")]
+[Prototype]
 public sealed partial class TechnologyPrototype : IPrototype
 {
     /// <inheritdoc/>
@@ -22,9 +22,17 @@ public sealed partial class TechnologyPrototype : IPrototype
 
     /// <summary>
     /// An icon used to visually represent the technology in UI.
+    /// Frontier: If not specified and EntityIcon is provided, will use the entity's sprite automatically.
     /// </summary>
-    [DataField(required: true)]
-    public SpriteSpecifier Icon = default!;
+    [DataField] // Frontier: Not required
+    public SpriteSpecifier? Icon = null; // Frontier: Not required
+
+    /// <summary>
+    /// Frontier: An entity prototype whose sprite will be used as the technology icon.
+    /// If specified, this takes precedence over Icon when Icon is not provided.
+    /// </summary>
+    [DataField]
+    public EntProtoId? EntityIcon = null;
 
     /// <summary>
     /// What research discipline this technology belongs to.
@@ -69,6 +77,13 @@ public sealed partial class TechnologyPrototype : IPrototype
     /// </summary>
     [DataField]
     public IReadOnlyList<GenericUnlock> GenericUnlocks = new List<GenericUnlock>();
+
+    /// <summary>
+    /// Goobstation R&D console rework field
+    /// Position of this tech in console menu
+    /// </summary>
+    [DataField(required: true)]
+    public Vector2i Position { get; private set; }
 }
 
 [DataDefinition]

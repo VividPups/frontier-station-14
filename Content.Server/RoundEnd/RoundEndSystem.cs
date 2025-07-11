@@ -4,8 +4,6 @@ using Content.Server.AlertLevel;
 using Content.Shared.CCVar;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
-using Content.Server.DeviceNetwork;
-using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.GameTicking;
 using Content.Server.Screens.Components;
@@ -21,7 +19,9 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Content.Shared.DeviceNetwork.Components;
 using Timer = Robust.Shared.Timing.Timer;
+using Content.Server._NF.SectorServices; // Frontier
 
 namespace Content.Server.RoundEnd
 {
@@ -42,6 +42,7 @@ namespace Content.Server.RoundEnd
         [Dependency] private readonly EmergencyShuttleSystem _shuttle = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly StationSystem _stationSystem = default!;
+        [Dependency] private readonly SectorServiceSystem _sectorService = default!; // Frontier: sector-wide alerts
 
         public TimeSpan DefaultCooldownDuration { get; set; } = TimeSpan.FromSeconds(30);
 
@@ -131,7 +132,8 @@ namespace Content.Server.RoundEnd
 
             if (requester != null)
             {
-                var stationUid = _stationSystem.GetOwningStation(requester.Value);
+                var stationUid = _sectorService.GetServiceEntity(); // Frontier: sector-wide alerts
+                // var stationUid = _stationSystem.GetOwningStation(requester.Value); // Frontier: sector-wide alerts
                 if (TryComp<AlertLevelComponent>(stationUid, out var alertLevel))
                 {
                     duration = _protoManager
@@ -234,7 +236,7 @@ namespace Content.Server.RoundEnd
             }
 
             _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("round-end-system-shuttle-recalled-announcement"),
-                Loc.GetString("Station"), false, colorOverride: Color.Gold);
+                Loc.GetString("round-end-system-shuttle-sender-announcement"), false, colorOverride: Color.Gold);
 
             _audio.PlayGlobal("/Audio/Announcements/shuttlerecalled.ogg", Filter.Broadcast(), true);
 

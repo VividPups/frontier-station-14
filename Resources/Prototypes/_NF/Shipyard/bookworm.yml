@@ -10,19 +10,22 @@
 #
 - type: vessel
   id: Bookworm
-  name: SBB Bookworm
+  parent: BaseVessel
+  name: BB Bookworm
   description: A cozy medium-size library for travellers who wish to relax with a book or perhaps a board game.
-  price: 27000 # ~24660 after purchase + ~9% markup
+  price: 29000 # ~26482 0.05 27806.1
   category: Medium
   group: Shipyard
   shuttlePath: /Maps/_NF/Shuttles/bookworm.yml
   guidebookPage: ShipyardBookworm
   class:
   - Civilian
+  engine:
+  - Plasma
 
 - type: gameMap
   id: Bookworm
-  mapName: 'SBB Bookworm'
+  mapName: 'BB Bookworm'
   mapPath: /Maps/_NF/Shuttles/bookworm.yml
   minPlayers: 0
   stations:
@@ -36,6 +39,6 @@
             prefixCreator: '14'
         - type: StationJobs
           availableJobs:
-            Contractor: [ 0, 0 ]
-            Pilot: [ 0, 0 ]
-            Mercenary: [ 0, 0 ]
+            ContractorInterview: [ 0, 0 ]
+            PilotInterview: [ 0, 0 ]
+            MercenaryInterview: [ 0, 0 ]

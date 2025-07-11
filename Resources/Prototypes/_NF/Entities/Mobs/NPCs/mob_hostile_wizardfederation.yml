@@ -1,21 +1,16 @@
 ## Mob base
 - type: entity
-  abstract: true
-  id: MobWizFedTimedDespawn
-  components:
-  - type: TimedDespawn
-    lifetime: 1800 # 30 mins (max blue space event duration involving these mobs - 20 mins)
-
-- type: entity
   name: Wizard
   abstract: true
   parent:
+  - NFMobNoEquipmentOnGib
+  - MobMovementSpeedModifierRanged
+  - MobStaminaSpecial
   - MobHumanoidHostileBase
   - MobPassiveRegen
   - MobHumanoidInvetory
   - MobHumanoidHostileAISimpleRanged
-  - MobLaserReflect # Added to prevent laser abuse from players
-  #- MobWizFedTimedDespawn
+  #- MobLaserReflect # Added to prevent laser abuse from players
   id: MobWizFedlBase
   components:
   - type: NpcFactionMember
@@ -31,29 +26,21 @@
     damage:
       types:
         Heat: 0
-  - type: Stamina
-    critThreshold: 400
   - type: MobThresholds
     thresholds:
       0: Alive
-      120: Critical
+      100: Critical
       160: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
-      72: 0.7
-      96: 0.5
+      60: 0.7
+      80: 0.5
   - type: Advertise
     pack: wizardhumanoidchatter
     minimumWait: 30
     maximumWait: 120
     nextAdvertisementTime: 10
   - type: AutoWakeUp
-  - type: TriggerOnBeingGibbed
-  - type: GibOnTrigger
-    deleteItems: true
-    deleteOrgans: true
-    gib: false
-    useArgumentEntity: true
 
 # Humans
 # Blue Wizard, summons 2 Blue Curacao Elementals
@@ -118,7 +105,7 @@
     count: 8
   - type: Gun
     showExamineText: false
-    fireRate: 6
+    fireRate: 3
     soundGunshot:
       path: /Audio/Magic/fireball.ogg
   - type: RechargeBasicEntityAmmo
@@ -146,6 +133,27 @@
     fireRate: 1
     soundGunshot:
       path: /Audio/Effects/teleport_arrival.ogg
+
+# Brick Wizard, shoots magic bricks that smack targets (12 blunt damage on hit)
+# Look for magic brick here:\Resources\Prototypes\_NF\Entities\Objects\Specific\Wizard\conjured_items.yml
+- type: entity
+  name: Brick Wizard
+  parent: MobWizFedlBase
+  id: MobWizFedWizardBrick
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Loadout
+    prototypes:
+    - NPCWizardBrickGear
+  - type: BasicEntityAmmoProvider
+    proto: BrickConjured
+    capacity: 20
+    count: 20
+  - type: Gun
+    showExamineText: false
+    fireRate: 2
+    soundGunshot:
+        collection: Woosh
 
 # Wizards in hardsuits
 - type: entity
@@ -189,6 +197,17 @@
     prototypes:
     - NPCWizardSoapHardsuitGear
 
+- type: entity
+  name: Brick Wizard
+  suffix: AI, Hardsuit
+  parent: MobWizFedWizardBrick
+  id: MobWizFedWizardBrickHardsuit
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Loadout
+    prototypes:
+    - NPCWizardBrickHardsuitGear
+
 # Conjured Creatures
 - type: entity
   name: Blue Curacao Elemental
@@ -196,6 +215,7 @@
   parent:
   - MobNonHumanHostileBase
   - MobHumanoidHostileAISimpleMelee
+  - NFMobTimedDespawn30
   id: WaterElementalConjured
   components:
   - type: HTN
@@ -244,7 +264,8 @@
   - type: MeleeChemicalInjector
     solution: bloodstream
     transferAmount: 10
-  - type: TimedDespawn
-    lifetime: 30
   - type: Ammo
     muzzleFlash: null
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 4.5
+    baseSprintSpeed : 4.5

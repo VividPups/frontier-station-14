@@ -1,48 +1,43 @@
-# Ranged weapons
+# region Ranged weapons
 - type: latheRecipe
-  id: WeaponLaserPistolNF
-  result: WeaponLaserPistolNF
-  category: Weapons
-  completetime: 5
+  id: NFWeaponEnergyPistolLaser
+  result: NFWeaponEnergyPistolLaser
+  parent: BaseWeaponRecipeLong
   materials:
     Steel: 1200
     Glass: 800
     Silver: 850
 
 - type: latheRecipe
-  id: WeaponRevolverArgenti
-  result: WeaponRevolverArgenti
-  category: Weapons
-  completetime: 5
+  id: NFWeaponRevolverArgenti
+  result: NFWeaponRevolverArgenti
+  parent: BaseWeaponRecipeLong
   materials:
     Steel: 1500
     Plasteel: 500
 
 - type: latheRecipe
-  id: WeaponPistolMk58NF
-  result: WeaponPistolMk58
-  category: Weapons
-  completetime: 5
+  id: NFWeaponPistolMk58
+  result: NFWeaponPistolMk58
+  parent: BaseWeaponRecipeLong
   materials:
     Steel: 1000
     Plasteel: 1200
     Plastic: 1500
 
 - type: latheRecipe
-  id: WeaponShotgunDoubleBarreled
-  result: WeaponShotgunDoubleBarreled
-  category: Weapons
-  completetime: 5
+  id: NFWeaponShotgunDoubleBarreled
+  result: NFWeaponShotgunDoubleBarreled
+  parent: BaseWeaponRecipeLong
   materials:
     Steel: 2000
     Plasteel: 800
     Wood: 1000
 
 - type: latheRecipe
-  id: WeaponShotgunKammererNF
-  result: WeaponShotgunKammerer
-  category: Weapons
-  completetime: 5
+  id: NFWeaponShotgunKammerer
+  result: NFWeaponShotgunKammerer
+  parent: BaseWeaponRecipeLong
   materials:
     Steel: 500
     Plasteel: 1500
@@ -50,97 +45,98 @@
     Plastic: 500
 
 - type: latheRecipe
-  id: WeaponRifleNovaliteC1
-  result: WeaponRifleNovaliteC1
-  category: Weapons
-  completetime: 5
+  id: NFWeaponRifleAssaultNovaliteC1
+  result: NFWeaponRifleAssaultNovaliteC1
+  parent: BaseWeaponRecipeLong
   materials:
     Steel: 2500
     Plasteel: 1200
     Plastic: 1500
 
 - type: latheRecipe
-  id: WeaponRifleGestio
-  result: WeaponRifleGestio
-  category: Weapons
-  completetime: 5
+  id: NFWeaponRifleAssaultGestio
+  result: NFWeaponRifleAssaultGestio
+  parent: BaseWeaponRecipeLong
   materials:
     Steel: 2500
     Plasteel: 1200
     Plastic: 1500
-
-- type: latheRecipe
-  id: WeaponAntiqueLaserNF
-  result: WeaponAntiqueLaser
-  category: Weapons
-  completetime: 5
-  materials:
-    Plasteel: 1500
-    Glass: 1000
-    Gold: 850
-    Plastic: 1000
 
 - type: latheRecipe
   id: CrossbowModern
   result: CrossbowModern
-  category: Weapons
-  completetime: 5
+  parent: BaseWeaponRecipeLong
   materials:
     Steel: 1000
     Plasteel: 500
     Durathread: 500
     Plastic: 500
 
+- type: latheRecipe
+  parent: BaseWeaponRecipeLong
+  id: NFWeaponHoloflareGun
+  result: NFWeaponHoloflareGun  
+  materials:
+    Steel: 300
+    Glass: 200
+    Plastic: 200
+
+# region Melee weapons
+- type: latheRecipe
+  id: NFWeaponPka
+  result: NFWeaponPka
+  parent: BaseWeaponRecipeLong
+  materials:
+    Steel: 1000
+    Glass: 500
+    Silver: 100
+
+- type: latheRecipe
+  id: NFWeaponPkaCannon
+  result: NFWeaponPkaCannon
+  parent: BaseWeaponRecipeLong
+  materials:
+    Plasteel: 1000
+    Glass: 750
+    Silver: 100
+    Gold: 100
+
 # Melee weapons
 - type: latheRecipe
   id: BaseBallBatNF
+  parent: BaseWeaponRecipeLong
   result: BaseBallBat
-  category: Weapons
-  completetime: 4
   materials:
     Wood: 700
 
 - type: latheRecipe
   id: BolaNF
+  parent: BaseWeaponRecipe
   result: Bola
-  category: Weapons
-  completetime: 2
   materials:
     Durathread: 200
     Plasteel: 600
 
 - type: latheRecipe
   id: KukriKnifeNF
+  parent: BaseWeaponRecipe
   result: KukriKnife
-  category: Weapons
-  completetime: 4
   materials:
     Plasteel: 500
     Plastic: 200
 
 - type: latheRecipe
   id: MacheteNF
+  parent: BaseWeaponRecipe
   result: Machete
-  category: Weapons
-  completetime: 4
   materials:
     Steel: 500
     Plastic: 200
 
 - type: latheRecipe
-  id: KatanaNF
-  result: Katana
-  category: Weapons
-  completetime: 6
-  materials:
-    Plasteel: 500
-    Plastic: 300
-
-- type: latheRecipe
   id: WeaponCrusher
+  parent: BaseWeaponRecipeLong
   result: WeaponCrusher
-  category: Weapons
-  completetime: 5
   materials:
     Steel: 1000
     Glass: 250
@@ -148,9 +144,8 @@
 
 - type: latheRecipe
   id: WeaponCrusherDagger
+  parent: BaseWeaponRecipeLong
   result: WeaponCrusherDagger
-  category: Weapons
-  completetime: 5
   materials:
     Steel: 500
     Glass: 250
@@ -158,11 +153,18 @@
 
 - type: latheRecipe
   id: WeaponCrusherGlaive
+  parent: BaseWeaponRecipeLong
   result: WeaponCrusherGlaive
-  category: Weapons
-  completetime: 5
   materials:
     Steel: 1500
     Glass: 500
     Plastic: 50
     Gold: 100
+
+- type: latheRecipe
+  parent: BaseWeaponRecipe
+  id: SurvivalKnife
+  result: SurvivalKnife
+  materials:
+    Steel: 250
+    Plastic: 100

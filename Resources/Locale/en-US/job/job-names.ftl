@@ -61,6 +61,11 @@ job-name-unknown = Unknown
 job-name-virologist = Virologist
 job-name-zombie = Zombie
 
+# Job titles
+job-title-visitor = Visitor
+job-title-cluwne = Cluwne
+job-title-universal = Universal
+
 # Role timers - Make these alphabetical or I cut you
 JobAtmosphericTechnician = Atmospheric Technician
 JobBartender = Bartender
@@ -73,7 +78,8 @@ JobCentralCommandOfficial = Central Command Official
 JobChaplain = Chaplain
 JobChef = Chef
 JobChemist = Chemist
-JobChiefEngineer = Chief Engineer
+# Frontier: Chief Engineer<Plant Manager
+JobChiefEngineer = Plant Manager
 JobChiefMedicalOfficer = Chief Medical Officer
 JobClown = Clown
 JobDetective = Detective

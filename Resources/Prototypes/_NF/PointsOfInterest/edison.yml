@@ -1,5 +1,5 @@
 # Author Info
-# GitHub: 
+# GitHub:
 # Discord: Checkraze
 
 # Maintainer Info
@@ -7,29 +7,40 @@
 # Discord: ???
 
 # Notes:
-# 
-# - type: pointOfInterest
-  # id: Edison
-  # name: 'Edison Power Plant'
-  # rangeMin: 3650
-  # rangeMax: 6400
-  # IFFColor: "#3737C8" #blue the color of NT
-  # spawnGroup: Required
-  # gridPath: /Maps/_NF/POI/edison.yml 
+#
+- type: pointOfInterest
+  id: Edison
+  parent: BasePOI
+  name: 'Edison Power Plant'
+  minimumDistance: 3650
+  maximumDistance: 5400
+  minimumClearance: 1000
+  spawnGroup: Required
+  gridPath: /Maps/_NF/POI/edison.yml
+  addComponents:
+  - type: IFF
+    color: "#3737F8"
+  - type: SolarPoweredGrid
+    trackOnInit: true
+    doNotCull: true
 
-# - type: gameMap
-  # id: Edison
-  # mapName: 'Edison Power Plant'
-  # mapPath: /Maps/_NF/POI/edison.yml
-  # minPlayers: 0
-  # stations:
-    # Edison:
-      # stationProto: SpawnableFrontierOutpost
-      # components:
-        # - type: StationNameSetup
-          # mapNameTemplate: 'Edison Power Plant'
-        # - type: StationJobs
-          # availableJobs:
-            # Pilot: [ 0, 0 ]
-            # Mercenary: [ 0, 0 ]
-            # Contractor: [ 0, 0 ]
+- type: gameMap
+  id: Edison
+  mapName: 'Edison Power Plant'
+  mapPath: /Maps/_NF/POI/edison.yml
+  minPlayers: 0
+  stations:
+    Edison:
+      stationProto: RecordsFrontierOutpost
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Edison Power Plant'
+        - type: ExtraStationInformation
+          iconPath: /Textures/_NF/Structures/Decoration/banner.rsi/banner_engineering.png
+          stationSubtext: frontier-lobby-edison-subtext
+          stationDescription: frontier-lobby-edison-description
+          lobbySortOrder: 5
+        - type: StationJobs
+          availableJobs:
+            PlantManager: [ 1, 1 ]
+            PlantTechnician: [ 0, 0 ]

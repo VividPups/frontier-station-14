@@ -1,3 +1,4 @@
+using Content.Server._NF.Shuttles.Components; // Frontier
 using Content.Server.Administration.Logs;
 using Content.Server.Body.Systems;
 using Content.Server.Doors.Systems;
@@ -5,10 +6,13 @@ using Content.Server.GameTicking;
 using Content.Server.Parallax;
 using Content.Server.Procedural;
 using Content.Server.Shuttles.Components;
+using Content.Server.Shuttles.Events;
 using Content.Server.Station.Systems;
 using Content.Server.Stunnable;
 using Content.Shared.GameTicking;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Movement.Events;
+using Content.Shared.Salvage;
 using Content.Shared.Shuttles.Systems;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
@@ -17,6 +21,7 @@ using Robust.Server.GameStates;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
+using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
@@ -52,6 +57,7 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedSalvageSystem _salvage = default!;
     [Dependency] private readonly ShuttleConsoleSystem _console = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly StunSystem _stuns = default!;
@@ -77,6 +83,9 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
 
         SubscribeLocalEvent<ShuttleComponent, ComponentStartup>(OnShuttleStartup);
         SubscribeLocalEvent<ShuttleComponent, ComponentShutdown>(OnShuttleShutdown);
+        SubscribeLocalEvent<ShuttleComponent, TileFrictionEvent>(OnTileFriction);
+        SubscribeLocalEvent<ShuttleComponent, FTLStartedEvent>(OnFTLStarted);
+        SubscribeLocalEvent<ShuttleComponent, FTLCompletedEvent>(OnFTLCompleted);
 
         SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
         SubscribeLocalEvent<FixturesComponent, GridFixtureChangeEvent>(OnGridFixtureChange);
@@ -124,12 +133,17 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
         {
             Enable(uid, component: physicsComponent, shuttle: component);
         }
+
+        component.DampingModifier = component.BodyModifier;
     }
 
     public void Toggle(EntityUid uid, ShuttleComponent component)
     {
         if (!EntityManager.TryGetComponent(uid, out PhysicsComponent? physicsComponent))
             return;
+
+        if (HasComp<PreventGridAnchorChangesComponent>(uid)) // Frontier
+            return; // Frontier
 
         component.Enabled = !component.Enabled;
 
@@ -148,17 +162,21 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
         if (!Resolve(uid, ref manager, ref component, ref shuttle, false))
             return;
 
+        if (HasComp<PreventGridAnchorChangesComponent>(uid)) // Frontier
+            return; // Frontier
+
         _physics.SetBodyType(uid, BodyType.Dynamic, manager: manager, body: component);
         _physics.SetBodyStatus(uid, component, BodyStatus.InAir);
         _physics.SetFixedRotation(uid, false, manager: manager, body: component);
-        _physics.SetLinearDamping(uid, component, shuttle.LinearDamping);
-        _physics.SetAngularDamping(uid, component, shuttle.AngularDamping);
     }
 
     public void Disable(EntityUid uid, FixturesComponent? manager = null, PhysicsComponent? component = null)
     {
         if (!Resolve(uid, ref manager, ref component, false))
             return;
+
+        if (HasComp<PreventGridAnchorChangesComponent>(uid)) // Frontier
+            return; // Frontier
 
         _physics.SetBodyType(uid, BodyType.Static, manager: manager, body: component);
         _physics.SetBodyStatus(uid, component, BodyStatus.OnGround);
@@ -172,5 +190,20 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
             return;
 
         Disable(uid);
+    }
+
+    private void OnTileFriction(Entity<ShuttleComponent> ent, ref TileFrictionEvent args)
+    {
+        args.Modifier *= ent.Comp.DampingModifier;
+    }
+
+    private void OnFTLStarted(Entity<ShuttleComponent> ent, ref FTLStartedEvent args)
+    {
+        ent.Comp.DampingModifier = 0f;
+    }
+
+    private void OnFTLCompleted(Entity<ShuttleComponent> ent, ref FTLCompletedEvent args)
+    {
+        ent.Comp.DampingModifier = ent.Comp.BodyModifier;
     }
 }

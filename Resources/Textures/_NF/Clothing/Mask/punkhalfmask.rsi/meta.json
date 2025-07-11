@@ -16,11 +16,21 @@
       "directions": 4
     },
     {
+      "name": "icon-base-mask"
+    },
+    {
+      "name": "icon-decor-mask"
+    },
+    {
       "name": "inhand-right",
       "directions": 4
     },
     {
       "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "up-equipped-MASK",
       "directions": 4
     }
   ]

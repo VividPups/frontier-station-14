@@ -6,30 +6,34 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 36000 #10 hrs
+      time: 9000 #2.5 hrs
   startingGear: SecurityOfficerGear
   icon: "JobIconSecurityOfficer"
   supervisors: job-supervisors-hos
   canBeAntag: false
-  access:
-  - Security
-  - Brig
-  - Maintenance
-  - Service
-  - External
-  - Cryogenics
-  special:
-  - !type:AddImplantSpecial
-    implants: [ MindShieldImplant ]
+  ## Frontier: commented out stuff below
+  # access:
+  # - Security
+  # - Brig
+  # - Maintenance
+  # - Service
+  # - External
+  # - Cryogenics
+  # special:
+  # - !type:AddImplantSpecial
+  #   implants: [ MindShieldImplant ]
+  ## End Frontier: commented out stuff above
   setPreference: false # Frontier
+  accessGroups: # Frontier
+  - GeneralAccess # Frontier
 
 - type: startingGear
   id: SecurityOfficerGear
   equipment:
     eyes: ClothingEyesGlassesSecurity
     ears: ClothingHeadsetSecurity
-    pocket1: WeaponPistolMk58
+    pocket1: NFWeaponPistolMk58 # Frontier: use NF variant
   storage:
     back:
     - Flash
-    - MagazinePistol
+    - NFMagazinePistol35 # Frontier: MagazinePistol<NFMagazinePistol35

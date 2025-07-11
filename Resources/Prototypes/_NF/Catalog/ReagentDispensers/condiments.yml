@@ -1,0 +1,12 @@
+- type: reagentDispenserInventory
+  id: CondimentDispenserInventory
+  inventory:
+  - DrinkAstrotameJug
+  - DrinkBbqSauceJug
+  - DrinkColdsauceJug
+  - DrinkHorseradishSauceJug
+  - DrinkHotsauceJug
+  - DrinkKetchupJug
+  - DrinkMustardJug
+  - DrinkSoysauceJug
+  - DrinkMayoJug

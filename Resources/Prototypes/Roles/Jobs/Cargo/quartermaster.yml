@@ -5,17 +5,37 @@
   playTimeTracker: JobQuartermaster
   setPreference: false # Frontier
   requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 144000 #40 hrs
-    - !type:AgeRequirement
-      requiredAge: 21
+    - !type:RoleTimeRequirement
+      role: JobCargoTechnician
+      time: 18000 #5 hrs
+    - !type:RoleTimeRequirement
+      role: JobSalvageSpecialist
+      time: 9000 #2.5 hrs
+    - !type:DepartmentTimeRequirement
+      department: Cargo
+      time: 36000 #10 hours
   weight: 10
   startingGear: QuartermasterGear
   icon: "JobIconQuarterMaster"
-  supervisors: job-supervisors-hire # Frontier
-#  canBeAntag: false
+  supervisors: job-supervisors-captain
+  canBeAntag: false
+  # access: # Frontier
+  # - Cargo # Frontier
+  # - Salvage # Frontier
+  # - Quartermaster # Frontier
+  # - Maintenance # Frontier
+  # - External # Frontier
+  # - Command # Frontier
+  # - Brig # Frontier
+  # - Cryogenics # Frontier
   accessGroups: # Frontier
   - GeneralAccess # Frontier
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+      - type: CommandStaff
 
 - type: startingGear
   id: QuartermasterGear

@@ -5,15 +5,17 @@
   id: Medkit
   components:
   - type: Sprite
-    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    sprite: _NF/Objects/Specific/Medical/firstaidkits.rsi # Frontier: _NF prefix
     state: firstaid
   - type: Storage
     maxItemSize: Small
     grid:
     - 0,0,3,1
   - type: Item
-    size: Large
-    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    size: Normal # Frontier: Large<Normal
+    shape: # Frontier
+    - 0,0,3,1 # Frontier
+    sprite: _NF/Objects/Specific/Medical/firstaidkits.rsi # Frontier: _NF prefix
     heldPrefix: firstaid
   - type: PhysicalComposition
     materialComposition:

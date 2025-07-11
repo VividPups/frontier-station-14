@@ -6,6 +6,7 @@
   placement:
     mode: PlaceFree
   components:
+  - type: Animateable
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
@@ -47,7 +48,7 @@
         sound:
           collection: MetalBreak
   - type: StaticPrice
-    price: 10 # Frontier: 50<10
+    price: 15 # Frontier: 50<15
 
 #Starts unanchored, cannot be rotated while anchored
 - type: entity
@@ -158,7 +159,7 @@
 - type: entity
   name: white office chair
   id: ChairOfficeLight
-  parent: OfficeChairBase
+  parent: RollingOfficeChairBase # Goobstation - rolling chair, definition under _Goobstation
   components:
   - type: Sprite
     state: office-white
@@ -197,6 +198,8 @@
   components:
   - type: Sprite
     state: shuttle
+  - type: Rotatable # Frontier
+    rotateWhileAnchored: true # Frontier
   - type: Construction
     graph: Seat
     node: chairPilotSeat
@@ -354,6 +357,7 @@
     graph: Seat
     node: chairFolding
   - type: DamageExaminable
+  - type: NFChairFolding # Frontier: Crafting
 
 - type: entity
   parent: ChairFolding
@@ -407,6 +411,6 @@
             min: 2
             max: 4
   - type: StaticPrice
-    price: 20 # Frontier: 50<20
+    price: 45 # Frontier: 50<20, 20<45
   - type: PotentialDeadDrop # Frontier
     hintText: dead-drop-hint-bench # Frontier

@@ -54,8 +54,9 @@
     materialComposition:
       Glass: 60
   - type: SpaceGarbage
-  - type: StaticPrice
-    price: 3
+  - type: StaticPrice # Frontier
+    price: 4.5 # Frontier
+  - type: NFCookware # Frontier
 
 - type: entity
   name: broken plate
@@ -74,8 +75,10 @@
     tags:
     - Trash
   - type: SpaceGarbage
-  - type: StaticPrice
-    price: 1
+  - type: StaticPrice # Frontier
+    price: 1 # Frontier
+  - type: NFCookware # Frontier
+  - type: GoblinPreciousTrash # Frontier
 
 # Small Plate
 
@@ -109,11 +112,12 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: StaticPrice
-    price: 2
   - type: PhysicalComposition
     materialComposition:
       Glass: 30
+  - type: StaticPrice # Frontier
+    price: 3 # Frontier
+  - type: NFCookware # Frontier
 
 - type: entity
   parent: FoodPlateTrash
@@ -124,6 +128,7 @@
     state: plate-small-trash
   - type: Item
     storedOffset: 0,-3
+  - type: NFCookware # Frontier
 
 # Plastic Plate
 
@@ -143,8 +148,9 @@
   - type: Tag
     tags:
     - Trash
-  - type: StaticPrice
-    price: 1
+  - type: StaticPrice # Frontier
+    price: 1 # Frontier
+  - type: NFCookware # Frontier
 
 - type: entity
   name: plastic plate
@@ -162,8 +168,9 @@
   - type: Tag
     tags:
     - Trash
-  - type: StaticPrice
-    price: 1
+  - type: StaticPrice # Frontier
+    price: 1 # Frontier
+  - type: NFCookware # Frontier
 
 # Pie Tin
 
@@ -186,7 +193,33 @@
     - Trash
   - type: PhysicalComposition
     materialComposition:
-      Steel: 60
+      Steel: 15 # Frontier 60<15
   - type: SpaceGarbage
-  - type: StaticPrice
-    price: 1
+  - type: StaticPrice # Frontier
+    price: 4 # Frontier
+  - type: NFCookware # Frontier
+
+# Muffin Tin
+
+- type: entity
+  name: muffin tin
+  parent: BaseItem
+  id: FoodPlateMuffinTin
+  description: A cheap foil tin for muffins.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/plates.rsi
+    state: muffin-tin
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,0
+    storedOffset: 0,-3
+  - type: Tag
+    tags:
+    - Trash
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 30
+  - type: SpaceGarbage
+  - type: NFCookware # Frontier

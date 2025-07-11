@@ -5,6 +5,7 @@
   name: gas canister
   description: A canister that can contain any type of gas. It can be attached to connector ports using a wrench.
   components:
+    - type: Animateable
     - type: InteractionOutline
     - type: Transform
       noRot: true
@@ -16,7 +17,7 @@
     - type: Appearance
     - type: GenericVisualizer
       visuals:
-        enum.GasPortableVisuals.ConnectedState:
+        enum.AnchorVisuals.Anchored:
           connectedToPort:
             False: { state: can-connector, visible: false }
             True: { state: can-connector, visible: true }
@@ -34,6 +35,9 @@
             1: { state: can-o1, shader: "unshaded" }
             2: { state: can-o2, shader: "unshaded" }
             3: { state: can-o3, shader: "unshaded" }
+    - type: ActivatableUI
+      key: enum.GasCanisterUiKey.Key
+    - type: ActivatableUIRequiresLock
     - type: UserInterface
       interfaces:
         enum.GasCanisterUiKey.Key:
@@ -99,11 +103,19 @@
           components:
             - GasTank
     - type: StaticPrice
-      price: 100 # Frontier: 200<100
+      price: 125 # Frontier: 200<125
     - type: AccessReader
-#      access: [["Atmospherics"], ["Engineering"], ["Research"], ["Captain"]]
+#      access: [["Atmospherics"], ["Engineering"], ["Research"], ["Captain"]] # Frontier
+    - type: Construction # Frontier
+      graph: NFStorageCanister # Frontier
+      node: storagecanister # Frontier
     - type: Lock
-      locked: true
+      locked: true # Frontier: false<true
+    - type: GuideHelp
+      guides:
+      - GasCanisters
+    - type: Paintable # Upstream#37341
+      group: Canisters # Upstream#37341
 
 - type: entity
   parent: GasCanister
@@ -247,8 +259,8 @@
       moles:
         - 18710.71051 # oxygen
       temperature: 72
-#  - type: AccessReader
-#    access: [["Atmospherics"]]
+#  - type: AccessReader # Frontier
+#    access: [["Atmospherics"]] # Frontier
   - type: Destructible # Frontier
     thresholds:
     - trigger:
@@ -329,8 +341,8 @@
         - 0 # oxygen
         - 18710.71051 # nitrogen
       temperature: 72
-#  - type: AccessReader
-#    access: [["Atmospherics"]]
+#  - type: AccessReader # Frontier
+#    access: [["Atmospherics"]] # Frontier
   - type: Destructible
     thresholds:
     - trigger:
@@ -395,8 +407,8 @@
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
         - !type:DumpCanisterBehavior
-#    - type: Lock
-#      locked: true
+#    - type: Lock # Frontier
+#      locked: true # Frontier
 
 - type: entity
   id: LiquidCarbonDioxideCanister
@@ -415,8 +427,8 @@
         - 0 # nitrogen
         - 18710.71051 # CO2
       temperature: 72
-#  - type: AccessReader
-#    access: [["Atmospherics"]]
+#  - type: AccessReader # Frontier
+#    access: [["Atmospherics"]] # Frontier
   - type: Destructible
     thresholds:
     - trigger:
@@ -482,8 +494,10 @@
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
         - !type:DumpCanisterBehavior
-#    - type: Lock
-#      locked: true
+#    - type: Lock # Frontier
+#      locked: true # Frontier
+    - type: PirateBountyItem # Frontier
+      id: PlasmaCanister # Frontier
 
 - type: entity
   parent: GasCanister
@@ -666,6 +680,8 @@
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
         - !type:DumpCanisterBehavior
+    - type: Lock
+      locked: true
 
 - type: entity
   parent: GasCanister

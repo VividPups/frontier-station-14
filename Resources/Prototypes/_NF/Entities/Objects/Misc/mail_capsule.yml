@@ -57,8 +57,21 @@
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
+        showEnts: False
+        occludes: True
         ents: []
-      mail_slot: !type:ContainerSlot {}
+      mail_slot: !type:ContainerSlot
+        showEnts: False
+        occludes: True
+        ent: null
+      food_slot: !type:ContainerSlot
+        showEnts: False
+        occludes: True
+        ent: null
+      cash_slot: !type:ContainerSlot
+        showEnts: False
+        occludes: True
+        ent: null
   - type: Appearance
   - type: ItemMapper
     mapLayers:
@@ -126,9 +139,9 @@
 
 # A bag full of mail capsules, for the ERT mail carrier
 - type: entity
-  parent: MailBag
+  parent: NFMailBag
   suffix: Capsules
-  id: MailBagCapsulePrimed
+  id: NFMailBagCapsulePrimed
   components:
   - type: StorageFill
     contents:

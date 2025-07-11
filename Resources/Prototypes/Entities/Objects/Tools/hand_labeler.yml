@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseItem
+  parent: [BaseItem, RecyclableItemPlasticSmall] # Frontier: added RecyclableItemPlasticSmall
   id: HandLabeler
   name: hand labeler
   description: A hand labeler, used to label items and objects.
@@ -25,5 +25,6 @@
           - Item
         tags:
           - Structure
-    - type: StaticPrice
-      price: 10
+    - type: PhysicalComposition
+    - type: StaticPrice # Frontier
+      price: 10 # Frontier

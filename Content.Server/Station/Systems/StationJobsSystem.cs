@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server._NF.Station.Components;
 using Content.Server.GameTicking;
 using Content.Server.Station.Components;
 using Content.Shared.CCVar;
@@ -477,7 +478,7 @@ public sealed partial class StationJobsSystem : EntitySystem
 
     private bool _availableJobsDirty;
 
-    private TickerJobsAvailableEvent _cachedAvailableJobs = new(new(), new());
+    private TickerJobsAvailableEvent _cachedAvailableJobs = new(new()); // Frontier: use one dictionary of composite objects instead of two
 
     /// <summary>
     /// Assembles an event from the current available-to-play jobs.
@@ -488,27 +489,63 @@ public sealed partial class StationJobsSystem : EntitySystem
     {
         // If late join is disallowed, return no available jobs.
         if (_gameTicker.DisallowLateJoin)
-            return new TickerJobsAvailableEvent(new(), new());
-
-        var jobs = new Dictionary<NetEntity, Dictionary<ProtoId<JobPrototype>, int?>>();
-        var stationNames = new Dictionary<NetEntity, string>();
+            return new TickerJobsAvailableEvent(new()); // Frontier: changed param type
 
         var query = EntityQueryEnumerator<StationJobsComponent>();
 
+        // Frontier: the dictionary inside a dictionary replaced with <NetEntity, StationJobInformation> which is much cleaner.
+        var stationJobInformationList = new Dictionary<NetEntity, StationJobInformation>();
+
         while (query.MoveNext(out var station, out var comp))
         {
-            var netStation = GetNetEntity(station);
+            var stationNetEntity = GetNetEntity(station);
             var list = comp.JobList.ToDictionary(x => x.Key, x => x.Value);
-            jobs.Add(netStation, list);
-            stationNames.Add(netStation, Name(station));
+
+            // Frontier: overwrite station/vessel information generation
+            var isLateJoinStation = false;
+            VesselDisplayInformation? vesselDisplay = null;
+            StationDisplayInformation? stationDisplay = null;
+            if (TryComp<ExtraShuttleInformationComponent>(station, out var extraVesselInfo))
+            {
+                if (extraVesselInfo.HiddenWithoutOpenJobs && !list.Any(x => x.Value != 0))
+                    continue;
+
+                vesselDisplay = new VesselDisplayInformation(
+                    vesselAdvertisement: extraVesselInfo.Advertisement,
+                    vessel: extraVesselInfo.Vessel,
+                    hiddenIfNoJobs: extraVesselInfo.HiddenWithoutOpenJobs
+                );
+            }
+            else
+            {
+                isLateJoinStation = true;
+                if (TryComp<ExtraStationInformationComponent>(station, out var extraStationInformation))
+                {
+                    stationDisplay = new StationDisplayInformation(
+                        stationSubtext: extraStationInformation.StationSubtext,
+                        stationDescription: extraStationInformation.StationDescription,
+                        stationIcon: extraStationInformation.IconPath,
+                        lobbySortOrder: extraStationInformation.LobbySortOrder
+                    );
+                }
+            }
+            var stationJobInformation = new StationJobInformation(
+                stationName: Name(station),
+                jobsAvailable: list,
+                isLateJoinStation: isLateJoinStation,
+                stationDisplayInfo: stationDisplay,
+                vesselDisplayInfo: vesselDisplay
+            );
+            stationJobInformationList.Add(stationNetEntity, stationJobInformation);
+            // End Frontier: overwrite station/vessel information generation
         }
-        return new TickerJobsAvailableEvent(stationNames, jobs);
+        return new TickerJobsAvailableEvent(stationJobInformationList); // Frontier: changed param type
     }
 
     /// <summary>
     /// Updates the cached available jobs. Moderately expensive.
     /// </summary>
-    private void UpdateJobsAvailable()
+    public void UpdateJobsAvailable() // Frontier: private<public
     {
         _availableJobsDirty = true;
     }

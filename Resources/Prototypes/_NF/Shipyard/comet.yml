@@ -10,9 +10,10 @@
 #
 - type: vessel
   id: Comet
+  parent: BaseVessel
   name: NT Comet
   description: A mining and construction vessel intended to help build or repair quickly.
-  price: 55000
+  price: 62000 # 47721 0.3 62037.3
   category: Medium
   group: Shipyard
   shuttlePath: /Maps/_NF/Shuttles/comet.yml
@@ -20,6 +21,8 @@
   class:
   - Salvage
   - Engineering
+  engine:
+  - AME
 
 - type: gameMap
   id: Comet
@@ -37,6 +40,6 @@
             prefixCreator: '14'
         - type: StationJobs
           availableJobs:
-            Contractor: [ 0, 0 ]
-            Pilot: [ 0, 0 ]
-            Mercenary: [ 0, 0 ]
+            ContractorInterview: [ 0, 0 ]
+            PilotInterview: [ 0, 0 ]
+            MercenaryInterview: [ 0, 0 ]

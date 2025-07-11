@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: BaseItem
+  parent: [BaseItem, RecyclableItemPlasticTiny] # Frontier: added RecyclableItemPlasticTiny
   id: BaseDice
   components:
   - type: Dice
@@ -125,7 +125,8 @@
   - type: Slippery
     slipSound:
       path: /Audio/Effects/glass_step.ogg
-    launchForwardsMultiplier: 0
+    slipData:
+      launchForwardsMultiplier: 0
   - type: DamageUserOnTrigger
     damage:
       types:

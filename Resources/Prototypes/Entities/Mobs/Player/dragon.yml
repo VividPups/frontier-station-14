@@ -15,6 +15,8 @@
     name: ghost-role-information-space-dragon-name
     description: ghost-role-information-space-dragon-description
     rules: ghost-role-information-space-dragon-rules
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
     raffle:
       settings: default
   - type: GhostTakeoverAvailable
@@ -39,7 +41,7 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 3
     baseSprintSpeed: 5
-    weightlessModifier: 1.5
+    baseWeightlessModifier: 1.5
   - type: RandomSprite
     available:
     - enum.DamageStateVisualLayers.Base:
@@ -140,7 +142,7 @@
     foodPreference: Humanoid
     shouldStoreDevoured: true
     chemical: Ichor
-    healRate: 15.0
+    healRate: 7.5
     whitelist:
       components:
       - MobState
@@ -151,13 +153,30 @@
     tags:
     - CannotSuicide
     - DoorBumpOpener
+  - type: Puller
+    needsHands: false
+  - type: RandomMetadata
+    nameSegments:
+    - NamesDragon
+    - NamesDragonTitle
+    nameFormat: name-format-dragon
+  - type: Prying
+    pryPowered: true
+    force: true
+    speedModifier: 2.5 # fast because dragon strong
+    useSound:
+      path: /Audio/Items/crowbar.ogg
 
 - type: entity
   parent: BaseMobDragon
   id: MobDragon
+  abstract: true # Frontier: use NF variants
   components:
   - type: Dragon
     spawnRiftAction: ActionSpawnRift
+  - type: GhostRole
+    mindRoles:
+    - MindRoleDragon
   - type: ActionGun
     action: ActionDragonsBreath
     gunProto: DragonsBreathGun
@@ -173,20 +192,21 @@
   components:
   - type: RechargeBasicEntityAmmo
     rechargeCooldown: 5
-    rechargeSound:
-      path: /Audio/Animals/space_dragon_roar.ogg
+    rechargeSound: null # Frontier
+    #  path: /Audio/Animals/space_dragon_roar.ogg # Frontier
   - type: BasicEntityAmmoProvider
     proto: ProjectileDragonsBreath
     capacity: 1
     count: 1
   - type: Gun
-    soundGunshot:
-      path: /Audio/Animals/space_dragon_roar.ogg
+    soundGunshot: null # Frontier
+    #  path: /Audio/Animals/space_dragon_roar.ogg # Frontier
     soundEmpty: null
     projectileSpeed: 5
 
 - type: entity
-  parent: BaseMobDragon
+  abstract: true # Frontier: use NF variant
+  parent: [BaseMobDragon, MobNonHumanHostileBase]
   id: MobDragonDungeon
   suffix: Dungeon
   components:
@@ -207,18 +227,11 @@
     spawned:
     - id: FoodMeatDragon
       amount: 3
-    - id: DragonEgg #Frontier
-      amount: 1 #Frontier
-      prob: 0.3 #Frontier
   # half damage, spread evenly
   - type: MeleeWeapon
     damage:
       groups:
         Brute: 12
-  - type: ActionGun #Frontier
-    action: ActionDragonsBreath #Frontier
-    gunProto: DragonsBreathGun #Frontier
-  - type: NFSalvageMobRestrictions # Frontier
 
 - type: entity
   id: ActionSpawnRift
@@ -258,3 +271,6 @@
     checkCanAccess: false
     range: 0
     itemIconStyle: BigAction
+    useDelay: 5 # Frontier
+    sound: # Frontier
+      path: /Audio/Animals/space_dragon_roar.ogg # Frontier

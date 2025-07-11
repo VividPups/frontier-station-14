@@ -2,6 +2,7 @@ using Content.Server.Body.Components;
 using Content.Server.Medical.Components;
 using Content.Server.PowerCell;
 using Content.Server.Temperature.Components;
+using Content.Shared.Traits.Assorted;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
@@ -13,12 +14,11 @@ using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.MedicalScanner;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Popups;
-using Content.Shared.PowerCell;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
-using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using Content.Server._NF.Traits.Assorted; // Frontier
 
 namespace Content.Server.Medical;
 
@@ -64,8 +64,9 @@ public sealed class HealthAnalyzerSystem : EntitySystem
             component.NextUpdate = _timing.CurTime + component.UpdateInterval;
 
             //Get distance between health analyzer and the scanned entity
+            //null is infinite range
             var patientCoordinates = Transform(patient).Coordinates;
-            if (!_transformSystem.InRange(patientCoordinates, transform.Coordinates, component.MaxScanRange))
+            if (component.MaxScanRange != null && !_transformSystem.InRange(patientCoordinates, transform.Coordinates, component.MaxScanRange.Value))
             {
                 //Range too far, disable updates
                 StopAnalyzingEntity((uid, component), patient);
@@ -104,7 +105,8 @@ public sealed class HealthAnalyzerSystem : EntitySystem
         if (args.Handled || args.Cancelled || args.Target == null || !_cell.HasDrawCharge(uid, user: args.User))
             return;
 
-        _audio.PlayPvs(uid.Comp.ScanningEndSound, uid);
+        if (!uid.Comp.Silent)
+            _audio.PlayPvs(uid.Comp.ScanningEndSound, uid);
 
         OpenUserInterface(args.User, uid);
         BeginAnalyzingEntity(uid, args.Target.Value);
@@ -197,6 +199,8 @@ public sealed class HealthAnalyzerSystem : EntitySystem
 
         var bloodAmount = float.NaN;
         var bleeding = false;
+        var unrevivable = false;
+        var unclonable = false; // Frontier
 
         if (TryComp<BloodstreamComponent>(target, out var bloodstream) &&
             _solutionContainerSystem.ResolveSolution(target, bloodstream.BloodSolutionName,
@@ -206,12 +210,22 @@ public sealed class HealthAnalyzerSystem : EntitySystem
             bleeding = bloodstream.BleedAmount > 0;
         }
 
+        if (TryComp<UnrevivableComponent>(target, out var unrevivableComp) && unrevivableComp.Analyzable)
+            unrevivable = true;
+
+        // Frontier: add unclonable
+        if (TryComp<UnclonableComponent>(target, out var unclonableComp) && unclonableComp.Analyzable)
+            unclonable = true;
+        // End Frontier: add unclonable
+
         _uiSystem.ServerSendUiMessage(healthAnalyzer, HealthAnalyzerUiKey.Key, new HealthAnalyzerScannedUserMessage(
             GetNetEntity(target),
             bodyTemperature,
             bloodAmount,
             scanMode,
-            bleeding
+            bleeding,
+            unrevivable,
+            unclonable // Frontier
         ));
     }
 }

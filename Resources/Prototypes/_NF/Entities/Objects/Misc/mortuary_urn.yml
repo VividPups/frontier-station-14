@@ -30,8 +30,8 @@
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
-        ents: []
-      ashes_slot: !type:ContainerSlot {}
+      ashes_slot: !type:ContainerSlot
+      paper_label: !type:ContainerSlot
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -47,8 +47,8 @@
           Invoice: { state: paper }
   - type: PaperLabel
     labelSlot:
-      insertVerbText: Attach Label
-      ejectVerbText: Remove Label
+      insertVerbText: comp-paper-label-insert
+      ejectVerbText: comp-paper-label-eject
       whitelist:
         components:
         - Paper

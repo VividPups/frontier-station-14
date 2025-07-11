@@ -1,4 +1,4 @@
-﻿- type: constructionGraph
+- type: constructionGraph
   id: CraftCrossbowBoltGlassShard
   start: start
   graph:
@@ -13,7 +13,7 @@
         amount: 1
         doAfter: 0.5
       - tag: GlassShard
-        name: Glass Shard
+        name: construction-graph-tag-glass-shard
         icon:
           sprite: Objects/Materials/Shards/shard.rsi
           state: shard1
@@ -36,7 +36,7 @@
         amount: 1
         doAfter: 0.5
       - tag: PlasmaGlassShard
-        name: Plasma Glass Shard
+        name: construction-graph-tag-plasma-glass-shard
         icon:
           sprite: Objects/Materials/Shards/shard.rsi
           state: shard1
@@ -59,7 +59,7 @@
         amount: 1
         doAfter: 0.5
       - tag: UraniumGlassShard
-        name: Uranium Glass Shard
+        name: construction-graph-tag-uranium-glass-shard
         icon:
           sprite: Objects/Materials/Shards/shard.rsi
           state: shard1
@@ -82,7 +82,7 @@
         amount: 1
         doAfter: 0.5
       - tag: Syringe
-        name: Syringe
+        name: construction-graph-tag-syringe
         icon:
           sprite: Objects/Specific/Chemistry/syringe.rsi
           state: syringe_base0
@@ -122,9 +122,15 @@
         amount: 1
         doAfter: 0.5
       - tag: ShellShotgun
-        name: Shotgun shell
+        name: construction-graph-tag-shell-shotgun
         icon:
           sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+          state: base
+        doAfter: 1
+      - component: NFFireBomb
+        name: construction-graph-component-nf-fire-bomb
+        icon:
+          sprite: Objects/Weapons/Bombs/ied.rsi
           state: base
         doAfter: 1
   - node: CraftCrossbowBoltExplosive
@@ -140,16 +146,25 @@
       steps:
       - material: MetalRod
         amount: 1
-        doAfter: 0.5
+        doAfter: 0.4
       - material: Cloth
         amount: 1
-        doAfter: 0.5
-      - tag: PowerCellSmall
-        name: Small power cell
+        doAfter: 0.4
+      - material: Cable
+        amount: 5
+        doAfter: 0.4
+      - component: PowerCell
+        name: construction-graph-component-power-cell
         icon:
           sprite: Objects/Power/power_cells.rsi
-          state: small
-        doAfter: 1
+          state: high
+        doAfter: 0.4
+      - component: LogicGate
+        name: construction-graph-component-logic-gate
+        icon:
+          sprite: Objects/Devices/gates.rsi
+          state: base
+        doAfter: 0.4
   - node: CraftCrossbowBoltEMP
     entity: CrossbowBoltEMP
 
@@ -168,10 +183,33 @@
         amount: 1
         doAfter: 0.5
       - tag: Flare
-        name: Flare
+        name: construction-graph-tag-flare
         icon:
           sprite: Objects/Misc/flare.rsi
           state: icon
         doAfter: 1
   - node: CraftCrossbowBoltIncendiary
     entity: CrossbowBoltIncendiary
+
+- type: constructionGraph
+  id: CraftCrossbowBoltShrapnel
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: CraftCrossbowBoltShrapnel
+      steps:
+      - material: MetalRod
+        amount: 1
+        doAfter: 0.5
+      - material: Cloth
+        amount: 1
+        doAfter: 0.5
+      - tag: ShellShotgun
+        name: construction-graph-tag-shell-shotgun
+        icon:
+          sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+          state: base
+        doAfter: 1
+  - node: CraftCrossbowBoltShrapnel
+    entity: CrossbowBoltShrapnel

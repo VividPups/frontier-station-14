@@ -1,6 +1,9 @@
 - type: entity
   id: SuitStorageWallmount
-  parent: [BaseWallmount, BaseWallCloset, SuitStorageBase]
+  parent:
+  - BaseStructureWallmount
+  - BaseWallCloset
+  - SuitStorageBase
   name: suit wallstorage unit
   components:
   - type: Sprite
@@ -14,12 +17,10 @@
       map: ["enum.LockVisualLayers.Lock"]
       shader: unshaded
   - type: EntityStorageVisuals
-    stateBase: generic
+    stateBaseOpen: generic
     stateBaseClosed: generic
     stateDoorOpen: generic_open
     stateDoorClosed: generic_door
-    stateLocked: locked
-    stateUnlocked: unlocked
   - type: EntityStorage
     closeSound:
       path: /Audio/Machines/windoor_open.ogg

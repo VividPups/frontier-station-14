@@ -1,11 +1,10 @@
 <Document>
   # INVESTIGATOR-CLASS RESEARCH SHUTTLE
   <Box>
-  <GuideEntityEmbed Entity="VariedXenoArtifactItem"/>
+  <GuideEntityEmbed Entity="ComplexXenoArtifactItem"/>
   <GuideEntityEmbed Entity="MachineArtifactAnalyzer"/>
   <GuideEntityEmbed Entity="ComputerTabletopAnalysisConsole"/>
   <GuideEntityEmbed Entity="ResearchAndDevelopmentServer"/>
-  <GuideEntityEmbed Entity="TechnologyDisk" Caption="tech disk"/>
   </Box>
   <Box>
   <GuideEntityEmbed Entity="ShuttleMapInvestigator" Caption=""/>

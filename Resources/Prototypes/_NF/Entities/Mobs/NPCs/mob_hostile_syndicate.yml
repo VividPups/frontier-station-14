@@ -1,19 +1,15 @@
-- type: entity
-  abstract: true
-  id: MobSyndicateNavalTimedDespawn
-  components:
-  - type: TimedDespawn
-    lifetime: 3000 # 50 mins (max blue space event duration involving these mobs - 40 mins)
-
+#region base
 - type: entity
   name: syndicate naval agent
   abstract: true
   categories: [ HideSpawnMenu ]
   parent:
+  - NFMobNoEquipmentOnGib
+  - MobStaminaFodder
+  - MobMovementSpeedModifierRanged
   - MobHumanoidHostileBase
   - MobHumanoidInvetory
   - MobHumanoidHostileAISimpleRanged
-  #- MobSyndicateNavalTimedDespawn
   id: MobSyndicateNavalBase
   components:
   - type: Body
@@ -21,14 +17,14 @@
     requiredLegs: 2
   - type: NpcFactionMember
     factions:
-    - SyndicateNF
+    - NFSyndicate
   - type: RandomHumanoidAppearance
     randomizeName: false
   - type: RandomMetadata
     nameSegments:
-    - SyndicateNamesPrefix
-    - SyndicateNamesNormal
-    - SyndicateNamesElite
+    - NamesSyndicatePrefix
+    - NamesSyndicateNormal
+    - NamesSyndicateElite
   #- type: AutoImplant
     #implants:
     #- DeathRattleImplant
@@ -45,14 +41,8 @@
     maximumWait: 120
     nextAdvertisementTime: 10
   - type: AutoWakeUp
-  - type: TriggerOnBeingGibbed
-  - type: GibOnTrigger
-    deleteItems: true
-    deleteOrgans: true
-    gib: false
-    useArgumentEntity: true
 
-# Humans
+#region Humans
 # Syndicate Captain, "armed" with AP Python
 - type: entity
   name: syndicate captain
@@ -69,7 +59,7 @@
       rechargeSound:
         path: /Audio/_NF/Effects/silence.ogg
     - type: BasicEntityAmmoProvider
-      proto: BulletMagnumAP
+      proto: NFCartridgePistol45Uranium
       capacity: 1
       count: 1
     - type: Gun
@@ -89,7 +79,7 @@
       prototypes:
         - SyndicateNavalCaptainGearB
     - type: BasicEntityAmmoProvider
-      proto: BulletMagnum
+      proto: NFBulletPistol45Incendiary
       capacity: 1
       count: 1
 
@@ -102,7 +92,7 @@
       prototypes:
         - SyndicateNavalCaptainGearC
     - type: BasicEntityAmmoProvider
-      proto: BulletMagnum
+      proto: NFCartridgePistol45Overpressure
       capacity: 1
       count: 1
 
@@ -115,7 +105,7 @@
       prototypes:
         - SyndicateNavalCaptainGearD
     - type: BasicEntityAmmoProvider
-      proto: BulletMagnum
+      proto: NFCartridgePistol45
       capacity: 1
       count: 1
 
@@ -135,12 +125,16 @@
       rechargeSound:
         path: /Audio/_NF/Effects/silence.ogg
     - type: BasicEntityAmmoProvider
-      proto: ShellShotgunSlug
+      proto: NFShellShotgunUranium
       capacity: 1
       count: 1
     - type: Gun
       showExamineText: false
       fireRate: 2
+      minAngle: 10
+      maxAngle: 20
+      angleIncrease: 5
+      angleDecay: 3
       selectedMode: SemiAuto
       availableModes:
       - SemiAuto
@@ -155,7 +149,7 @@
       prototypes:
         - SyndicateNavalEngineerGearB
     - type: BasicEntityAmmoProvider
-      proto: ShellShotgun
+      proto: NFShellShotgunIncendiary
       capacity: 1
       count: 1
 
@@ -167,6 +161,10 @@
     - type: Loadout
       prototypes:
         - SyndicateNavalEngineerGearC
+    - type: BasicEntityAmmoProvider
+      proto: NFShellShotgunBuckshotOverpressure
+      capacity: 1
+      count: 1
 
 - type: entity
   parent: MobSyndicateNavalEngineerB
@@ -177,7 +175,7 @@
       prototypes:
         - SyndicateNavalEngineerGearD
     - type: BasicEntityAmmoProvider
-      proto: PelletShotgunBeanbag
+      proto: NFShellShotgunBeanbag
       capacity: 1
       count: 1
 
@@ -204,6 +202,10 @@
     - type: Gun
       showExamineText: false
       fireRate: 4
+      minAngle: 5
+      maxAngle: 20
+      angleIncrease: 2
+      angleDecay: 3
       selectedMode: SemiAuto
       availableModes:
       - SemiAuto
@@ -256,8 +258,8 @@
     - type: Loadout
       prototypes:
         - SyndicateNavalSecondOfficerGearA
-    - type: HitscanBatteryAmmoProvider
-      proto: RedMediumLaser
+    - type: ProjectileBatteryAmmoProvider
+      proto: NFBulletLaserLow
       fireCost: 100
     - type: BatterySelfRecharger
       autoRecharge: true
@@ -268,6 +270,10 @@
     - type: Gun
       showExamineText: false
       fireRate: 1
+      minAngle: 5
+      maxAngle: 20
+      angleIncrease: 1
+      angleDecay: 3
       selectedMode: SemiAuto
       availableModes:
         - SemiAuto
@@ -299,8 +305,8 @@
     - type: Loadout
       prototypes:
         - SyndicateNavalSecondOfficerGearD
-    - type: HitscanBatteryAmmoProvider
-      proto: RedLaser
+    - type: ProjectileBatteryAmmoProvider
+      proto: NFBulletLaserLow
       fireCost: 50
 
 # Syndicate Security Operative, "armed" with Atreides SMG
@@ -320,7 +326,7 @@
       rechargeSound:
         path: /Audio/_NF/Effects/silence.ogg
     - type: BasicEntityAmmoProvider
-      proto: BulletPistol
+      proto: NFCartridgePistol35Uranium
       capacity: 7
       count: 7
     - type: Gun
@@ -361,6 +367,10 @@
     - type: Loadout
       prototypes:
         - SyndicateNavalOperatorGearD
+    - type: BasicEntityAmmoProvider
+      proto: NFCartridgePistol35Overpressure
+      capacity: 7
+      count: 7
 
 # Syndicate Grenadier, "armed" with china lake
 - type: entity
@@ -382,7 +392,7 @@
       rechargeSound:
         path: /Audio/_NF/Effects/silence.ogg
     - type: BasicEntityAmmoProvider
-      proto: GrenadeFrag
+      proto: NFGrenadeFrag
       capacity: 1
       count: 1
     - type: Gun
@@ -402,7 +412,7 @@
       prototypes:
         - SyndicateNavalGrenadierGearB
     - type: BasicEntityAmmoProvider
-      proto: GrenadeBlast
+      proto: NFGrenadeBlast
       capacity: 1
       count: 1
 
@@ -415,7 +425,7 @@
       prototypes:
         - SyndicateNavalGrenadierGearC
     - type: BasicEntityAmmoProvider
-      proto: GrenadeBaton
+      proto: NFGrenadeBaton
       capacity: 1
       count: 1
 
@@ -428,7 +438,7 @@
       prototypes:
         - SyndicateNavalGrenadierGearD
     - type: BasicEntityAmmoProvider
-      proto: GrenadeFlash
+      proto: NFGrenadeFlash
       capacity: 2
       count: 2
 
@@ -448,7 +458,7 @@
       rechargeSound:
         path: /Audio/_NF/Effects/silence.ogg
     - type: BasicEntityAmmoProvider
-      proto: BulletPistolEmp
+      proto: NFCartridgePistol35Emp
       capacity: 4
       count: 4
     - type: Gun
@@ -490,31 +500,41 @@
 - type: entity
   name: captive
   parent:
+  - MobMovementSpeedModifierMelee
+  - MobStaminaFodder
   - MobHumanoidHostileBase
   - MobHumanoidHostileAISimpleMelee
   id: MobExperimentationVictim
   categories: [ HideSpawnMenu ]
   components:
-    - type: NameIdentifier
-      group: GenericNumber
-    - type: NpcFactionMember
-      factions:
-        - SimpleHostile
-    - type: Loadout
-      prototypes:
-        - SyndicateVictimInsaneGear
-    - type: InputMover
-    - type: MobMover
-    - type: HTN
-      rootTask:
-        task: SimpleHumanoidHostileCompound
+  - type: NameIdentifier
+    group: GenericNumber
+  - type: NpcFactionMember
+    factions:
+      - SimpleHostile
+  - type: Loadout
+    prototypes:
+      - SyndicateVictimInsaneGear
+  - type: InputMover
+  - type: MobMover
+  - type: HTN
+    rootTask:
+      task: SimpleHumanoidHostileCompound
+  - type: NFSalvageMobRestrictions
+    despawnIfOffLinkedGrid: false
+    addComponentsOnDeath: []
+    removeComponentsOnDeath:
+    - type: Prying
+    - type: Tool
 
+#region boss
 # Syndicate Commander, "armed" with AK
 - type: entity
   name: syndicate commander # Mega Fauna for Dungeons
   parent:
+  - MobHostileBossBase
   - MobSyndicateNavalBase
-  - MobLaserReflect # Added to prevent laser abuse from players
+  #- MobLaserReflect # Added to prevent laser abuse from players
   id: MobSyndicateNavalCommanderA
   description: A regional commander of Syndicate operations, this officer holds ultimate local command and responsibility. Armed with an assault rifle and heavily armored.
   categories: [ HideSpawnMenu ]
@@ -522,8 +542,6 @@
     - type: Loadout
       prototypes:
         - SyndicateNavalCommanderGearA
-    - type: Stamina
-      critThreshold: 500 # Extra hard to incapacitate and loot
     - type: AutoImplant
       implants:
       - DeathRattleImplant
@@ -533,12 +551,12 @@
       rechargeSound:
         path: /Audio/_NF/Effects/silence.ogg
     - type: BasicEntityAmmoProvider
-      proto: CartridgeLightRifle
+      proto: NFCartridgeRifle25Uranium
       capacity: 4
       count: 4
     - type: Gun
       showExamineText: false
-      fireRate: 5
+      fireRate: 4
       selectedMode: SemiAuto
       availableModes:
       - SemiAuto
@@ -553,12 +571,12 @@
       prototypes:
         - SyndicateNavalCommanderGearB
     - type: BasicEntityAmmoProvider
-      proto: CartridgeRifle
+      proto: NFCartridgeRifle25Incendiary
       capacity: 4
       count: 4
     - type: Gun
       showExamineText: false
-      fireRate: 5
+      fireRate: 4
       selectedMode: SemiAuto
       availableModes:
       - SemiAuto
@@ -572,6 +590,10 @@
     - type: Loadout
       prototypes:
         - SyndicateNavalCommanderGearC
+    - type: BasicEntityAmmoProvider
+      proto: NFCartridgeRifle25Overpressure
+      capacity: 4
+      count: 4
 
 - type: entity
   parent: MobSyndicateNavalCommanderB
@@ -581,6 +603,10 @@
     - type: Loadout
       prototypes:
         - SyndicateNavalCommanderGearD
+    - type: BasicEntityAmmoProvider
+      proto: NFCartridgeRifle25
+      capacity: 4
+      count: 4
 
 # Syndicate Deckhand, "armed" with Viper
 - type: entity
@@ -598,7 +624,7 @@
       rechargeSound:
         path: /Audio/_NF/Effects/silence.ogg
     - type: BasicEntityAmmoProvider
-      proto: BulletPistol
+      proto: NFBulletPistol35Uranium
       capacity: 4
       count: 4
     - type: Gun
@@ -617,6 +643,10 @@
     - type: Loadout
       prototypes:
         - SyndicateNavalDeckhandGearB
+    - type: BasicEntityAmmoProvider
+      proto: NFBulletPistol35Incendiary
+      capacity: 4
+      count: 4
 
 - type: entity
   parent: MobSyndicateNavalDeckhandA
@@ -626,6 +656,10 @@
     - type: Loadout
       prototypes:
         - SyndicateNavalDeckhandGearC
+    - type: BasicEntityAmmoProvider
+      proto: NFBulletPistol35Overpressure
+      capacity: 4
+      count: 4
 
 - type: entity
   parent: MobSyndicateNavalDeckhandA
@@ -640,6 +674,8 @@
 - type: entity
   name: syndicate mime
   parent:
+  - MobStaminaSpecial
+  - MobMovementSpeedModifierSpecial
   - MobSyndicateNavalBase
   - MobHumanoidHostileAISimpleMelee
   id: MobSyndicateNavalMime
@@ -648,22 +684,19 @@
     - type: Loadout
       prototypes:
         - SyndicateNavalMimeGear
-    - type: Stamina
-      critThreshold: 500
-    - type: MovementSpeedModifier
-      baseWalkSpeed: 4
-      baseSprintSpeed: 6
     - type: Advertise
       pack: mimehumanoidchatter
-      minimumWait: 120 # 1 * 2
-      maximumWait: 240 # 2 * 60
+      minimumWait: 120
+      maximumWait: 240
       nextAdvertisementTime: 0
 
 # Syndicate Chemwarrior, shoots healthy mixes of chems
 # Look for chems here: /Resources/Prototypes/_NF/Entities/Objects/Weapons/Ammunition/Projectiles/chem.yml
 - type: entity
   name: syndicate chemwarrior
-  parent: MobSyndicateNavalBase
+  parent:
+  - MobStaminaSpecial
+  - MobSyndicateNavalBase
   id: MobSyndicateNavalChemwarriorA
   description: Carrying tanks filled with dangerous chemicals, chemwarriors attack their enemies with a noxious spray.
   categories: [ HideSpawnMenu ]
@@ -681,7 +714,7 @@
     count: 3
   - type: Gun
     showExamineText: false
-    fireRate: 4
+    fireRate: 1
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
@@ -726,13 +759,14 @@
     capacity: 1
     count: 1
 
-# Void Troopers
+#region Void Troopers
 # Syndicate Captain, "armed" with Python
 - type: entity
   name: syndicate captain
   parent:
+  - MobMovementSpeedModifierEVARanged
   - MobSyndicateNavalCaptainA
-  - MobLaserReflect # Added to prevent laser abuse from players
+  #- MobLaserReflect # Added to prevent laser abuse from players
   id: MobSyndicateNavalCaptainVoid
   categories: [ HideSpawnMenu ]
   components:
@@ -740,15 +774,16 @@
       prototypes:
         - SyndicateNavalCaptainVoidGear
     - type: BasicEntityAmmoProvider
-      proto: BulletMagnum
+      proto: NFCartridgePistol45Uranium
       capacity: 1
       count: 1
 
 # Second Officer, "armed" with Advanced Laser Pistol
 - type: entity
   parent:
+  - MobMovementSpeedModifierEVARanged
   - MobSyndicateNavalSecondOfficerA
-  - MobLaserReflect # Added to prevent laser abuse from players
+  #- MobLaserReflect # Added to prevent laser abuse from players
   id: MobSyndicateNavalSecondOfficerVoid
   categories: [ HideSpawnMenu ]
   components:
@@ -759,8 +794,9 @@
 # Syndicate Security Operative, "armed" with Atreides SMG
 - type: entity
   parent:
+  - MobMovementSpeedModifierEVARanged
   - MobSyndicateNavalOperatorA
-  - MobLaserReflect # Added to prevent laser abuse from players
+  #- MobLaserReflect # Added to prevent laser abuse from players
   id: MobSyndicateNavalOperatorVoid
   categories: [ HideSpawnMenu ]
   components:
@@ -771,8 +807,9 @@
 # Syndicate Engineer, "armed" with shotgun
 - type: entity
   parent:
+  - MobMovementSpeedModifierEVARanged
   - MobSyndicateNavalEngineerA
-  - MobLaserReflect # Added to prevent laser abuse from players
+  #- MobLaserReflect # Added to prevent laser abuse from players
   id: MobSyndicateNavalEngineerVoid
   categories: [ HideSpawnMenu ]
   components:
@@ -782,15 +819,16 @@
       prototypes:
         - SyndicateNavalEngineerVoidGear
     - type: BasicEntityAmmoProvider
-      proto: ShellShotgun
+      proto: NFShellShotgunUranium
       capacity: 1
       count: 1
 
 # Syndicate Deckhand, "armed" with Viper
 - type: entity
   parent:
+  - MobMovementSpeedModifierEVARanged
   - MobSyndicateNavalDeckhandA
-  - MobLaserReflect # Added to prevent laser abuse from players
+  #- MobLaserReflect # Added to prevent laser abuse from players
   id: MobSyndicateNavalDeckhandVoid
   categories: [ HideSpawnMenu ]
   components:
@@ -803,8 +841,9 @@
 # Syndicate Medic, "armed" poisoned darts
 - type: entity
   parent:
+  - MobMovementSpeedModifierEVARanged
   - MobSyndicateNavalMedicA
-  - MobLaserReflect # Added to prevent laser abuse from players
+  #- MobLaserReflect # Added to prevent laser abuse from players
   id: MobSyndicateNavalMedicVoid
   categories: [ HideSpawnMenu ]
   components:

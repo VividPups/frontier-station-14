@@ -4,9 +4,7 @@
   name: goblin robes
   description: Traditional robes of goblinkind. Very regal.
   components:
-  - type: Tag
-    tags:
-    - ClothingRobesGoblin
+  - type: GoblinClothingRobes
   - type: Sprite
     sprite: _NF/Clothing/OuterClothing/Coats/goblin_robes.rsi
   - type: Clothing
@@ -15,11 +13,11 @@
     clothingPrototype: ClothingHeadHatHoodGoblin
     slot: head
   - type: Construction
-    graph: ClothingOuterCoatRobesGoblinGraph
-    node: ClothingOuterCoatRobesGoblinNode
+    graph: ClothingOuterCoatRobesGoblin
+    node: ClothingOuterCoatRobesGoblin
 
 - type: entity
-  parent: ClothingOuterEVASuitBaseNF
+  parent: NFClothingOuterEVASuitBase
   id: ClothingOuterEVASuitGoblin
   name: goblin EVA suit
   description: Traditional robes of goblinkind made EVA-capable. Very regal.
@@ -37,9 +35,10 @@
     slot: head
   - type: ContainerContainer
     containers:
-      toggleable-clothing: !type:ContainerSlot {}
+      toggleable-clothing: !type:ContainerSlot
+      storagebase: !type:Container
   - type: StaticPrice
     price: 65
   - type: Construction
-    graph: ClothingOuterEVASuitGoblinGraph
-    node: ClothingOuterEVASuitGoblinNode
+    graph: ClothingOuterEVASuitGoblin
+    node: ClothingOuterEVASuitGoblin

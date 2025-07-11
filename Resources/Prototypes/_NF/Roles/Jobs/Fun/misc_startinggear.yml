@@ -1,8 +1,30 @@
+# Aghost
+- type: startingGear
+  id: NFMobAghostGear
+  equipment:
+    back: ClothingBackpackSatchelHolding
+    id: NFAdminPDA
+  storage:
+    back:
+    - GasAnalyzer
+    - trayScanner
+    - AccessConfiguratorUniversal
+    - Multitool
+    - PowerDrill
+    - JawsOfLife
+    - WelderIndustrialAdvanced
+
 - type: startingGear
   id: MobClippyGear
   equipment:
     head: ClothingHeadMailCarrier
     id: ClippyIDCard
+
+- type: startingGear
+  id: MobCurieGear
+  equipment:
+    outerClothing: ClothingOuterSuitRad
+    id: CurieIDCard
 
 - type: startingGear
   id: MobClarpyGear

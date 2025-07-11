@@ -10,9 +10,10 @@
 #
 - type: vessel
   id: Crescent
+  parent: BaseVessel
   name: KC Crescent
   description: The Crescent, named for its exterior shape, is a vessel focused on providing service, medical aide, and scientific breakthroughs for smaller vessels.
-  price: 270000 # Appraises at 254471, ~6% markup - TODO: fix these values, getting tests to pass - Whatstone
+  price: 300000 # 260,000 + 15%
   category: Large
   group: Shipyard
   shuttlePath: /Maps/_NF/Shuttles/crescent.yml
@@ -21,6 +22,8 @@
   - Science
   - Chemistry
   - Civilian
+  engine:
+  - AME
 
 - type: gameMap
   id: Crescent
@@ -38,6 +41,7 @@
             prefixCreator: '14'
         - type: StationJobs
           availableJobs:
-            Contractor: [ 0, 0 ]
-            Pilot: [ 0, 0 ]
-            Mercenary: [ 0, 0 ]
+            ContractorInterview: [ 0, 0 ]
+            PilotInterview: [ 0, 0 ]
+            MercenaryInterview: [ 0, 0 ]
+#            StationAi: [ 0, 1 ]

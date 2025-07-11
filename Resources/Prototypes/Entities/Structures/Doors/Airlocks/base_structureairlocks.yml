@@ -20,6 +20,7 @@
     - state: closed_unlit
       shader: unshaded
       map: ["enum.DoorVisualLayers.BaseUnlit"]
+      visible: false
     - state: welded
       map: ["enum.WeldableLayers.BaseWelded"]
     - state: bolted_unlit
@@ -30,6 +31,16 @@
       shader: unshaded
     - state: panel_open
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+    - state: electrified_ai
+      sprite: Interface/Misc/ai_hud.rsi
+      shader: unshaded
+      visible: false
+      map: ["enum.ElectrifiedLayers.HUD"]
+    - state: electrified
+      sprite: Effects/electricity.rsi
+      shader: unshaded
+      visible: false
+      map: ["enum.ElectrifiedLayers.Sparks"]
   - type: AnimationPlayer
   - type: Physics
   - type: Fixtures
@@ -71,7 +82,14 @@
   - type: NavMapDoor
   - type: DoorBolt
   - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ElectrifiedVisuals.ShowSparks:
+        enum.ElectrifiedLayers.Sparks:
+          True: { visible: True }
+          False: { visible: False }
   - type: WiresVisuals
+  - type: ElectrocutionHUDVisuals
   - type: ApcPowerReceiver
     powerLoad: 20
   - type: ExtensionCableReceiver
@@ -143,9 +161,11 @@
   - type: IconSmooth
     key: walls
     mode: NoSprite
-  - type: PaintableAirlock
-    group: Standard
-    department: Civilian
+  # - type: PaintableAirlock # Upstream#37341
+  #   group: Standard # Upstream#37341
+  #   department: Civilian # Upstream#37341
+  - type: Paintable # Upstream#37341
+    group: AirlockStandard # Upstream#37341
   - type: StaticPrice
     price: 150
   - type: LightningTarget
@@ -156,6 +176,11 @@
       # This tag is used to nagivate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, and HighSecDoor
   - type: PryUnpowered
   - type: BlockWeather
+  - type: GuideHelp
+    guides:
+    - Airlocks
+    - WirePanels
+    - Networking
   placement:
     mode: SnapgridCenter
 
@@ -166,6 +191,8 @@
   components:
   - type: RCDDeconstructable
     deconstructable: false
+  - type: Door # Frontier
+    remoteCompatible: false # Frontier
 
 - type: entity
   id: AirlockGlass
@@ -200,8 +227,10 @@
   - type: Construction
     graph: Airlock
     node: glassAirlock
-  - type: PaintableAirlock
-    group: Glass
+  # - type: PaintableAirlock # Upstream#37341
+  #   group: Glass # Upstream#37341
+  - type: Paintable # Upstream#37341
+    group: AirlockGlass # Upstream#37341
   - type: RadiationBlocker
     resistance: 2
   - type: Tag

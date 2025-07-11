@@ -33,7 +33,7 @@
   id: ClothingOuterSuitJanitorBomb
   name: janitorial bomb suit
   description: A heavy helmet designed to withstand explosions formed from reactions between chemicals.
-  suffix: DO NOT MAP
+  categories: [ DoNotMap ]
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/janitor_bombsuit.rsi
@@ -127,6 +127,7 @@
       toggleable-clothing: !type:ContainerSlot {}
   - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
+  - type: CatWearable # Frontier
 
 - type: entity
   parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseToggleClothing, BaseC3Contraband, ContrabandClothing] # Frontier: BaseMajorContraband<BaseC3Contraband, added ContrabandClothing as parent
@@ -155,6 +156,7 @@
   # phase cloak
   - type: ToggleClothing
     action: ActionTogglePhaseCloak
+    disableOnUnequip: true
   - type: ComponentToggler
     parent: true
     components:
@@ -187,6 +189,9 @@
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellSmall
         disableEject: true
+        whitelist:
+          tags:
+            - PowerCell
 
 - type: entity
   parent: ClothingOuterBase
@@ -286,6 +291,7 @@
   parent: ClothingOuterSuitCarp
   id: ClothingOuterHardsuitCarp
   suffix: Hardsuit, DO NOT MAP
+  categories: [ DoNotMap ]
   components:
   - type: PressureProtection
     highPressureMultiplier: 0.6

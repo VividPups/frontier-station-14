@@ -19,6 +19,12 @@
   - type: StationRenameFaxes
 
 - type: entity
+  id: BaseStationRenameHolopads
+  abstract: true
+  components:
+  - type: StationRenameHolopads
+
+- type: entity
   id: BaseStationRenameWarpPoints
   abstract: true
   components:
@@ -46,6 +52,12 @@
   - type: StationDampening
 
 - type: entity
+  id: NFBaseStationCargo
+  abstract: true
+  components:
+    - type: NFStationCargoOrderDatabase
+
+- type: entity
   id: BaseStationCargoMarket
   abstract: true
   components:
@@ -57,7 +69,7 @@
       - Metal
       - Ingot
       - RawMaterial
-      - ClothMade
+      - ArtifactFragment
       - CrystalRed
       - CrystalGreen
       - CrystalPink
@@ -71,6 +83,8 @@
       - MachinePart
       - VendingMachineRestock
       - Seed
+      - MachineBoard
+      - ComputerBoard
     blacklist:
       tags:
       - Trash
@@ -92,15 +106,14 @@
       - MindContainer # Positronic brains
       - Body # No corpses
       - MobPrice # Animals (live or dead) and the like
-      - Artifact # Unique, abusable for research points
+      - XenoArtifact # Unique, abusable for research points
       - RCD # Dup charges
       - Storage # Till fixed
       - StorageFill # Till fixed
-      - ContainerContainer # Till fixed
-    overrideList:
-      matchParents: true
-      id:
-      - SheetUranium # Counts as food
+      - StationBoundObject # no laundering your rental ship machines
+    whitelistOverride:
+      components:
+      - UraniumMaterials # Counts as food
 
 - type: entity
   id: BaseStationDeadDrops
@@ -114,3 +127,9 @@
   abstract: true
   components:
     - type: StationDeadDropHintExempt
+
+- type: entity
+  id: BaseStationBusDepot
+  abstract: true
+  components:
+  - type: StationBusDepot
